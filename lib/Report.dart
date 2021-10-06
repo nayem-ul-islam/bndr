@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'HomePage.dart';
 import 'ActualLogin.dart';
 import 'Profile.dart';
-import 'Doctors.dart';
 
 class Report extends StatefulWidget {
   const Report({Key? key}) : super(key: key);
@@ -140,14 +139,7 @@ class _ReportState extends State<Report> {
                       color: Colors.white,
                     ),
                   ),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => Doctors(),
-                      ),
-                    );
-                  },
+                  onTap: () {},
                 ),
                 ListTile(
                   leading: Icon(
@@ -436,44 +428,56 @@ class _ReportState extends State<Report> {
                                 InputTaker(
                                   title: 'FBG',
                                   hints: '7.0',
-                                  title1: 'S.Creatinine',
-                                  hints1: '0.98',
+                                  title1: 'T.Chol',
+                                  hints1: '10%',
                                 ),
                                 InputTaker(
                                   title: '2hAG',
-                                  hints: '8.2',
-                                  title1: 'SGPT',
-                                  hints1: '20 U/L',
+                                  hints: '5',
+                                  title1: 'TG',
+                                  hints1: '5',
                                 ),
                                 InputTaker(
                                   title: 'RBG',
                                   hints: '8.4',
-                                  title1: 'Urine Albumin',
-                                  hints1: '',
+                                  title1: 'LDL-C',
+                                  hints1: '6',
                                 ),
                                 InputTaker(
                                   title: 'HbA1c',
                                   hints: '6.9%',
-                                  title1: 'Urine Acetone',
-                                  hints1: '',
-                                ),
-                                InputTaker(
-                                  title: 'T.Chol',
-                                  hints: '156',
-                                  title1: 'TG',
-                                  hints1: '121',
-                                ),
-                                InputTaker(
-                                  title: 'LDL-C',
-                                  hints: '101',
                                   title1: 'HDL-C',
-                                  hints1: '31',
+                                  hints1: '8',
+                                ),
+                                InputTaker(
+                                  title: 'S.Creatinine',
+                                  hints: '2',
+                                  title1: 'SGPT',
+                                  hints1: '6',
+                                ),
+                                InputTaker(
+                                  title: 'Urine Albumin',
+                                  hints: '9',
+                                  title1: 'ECG',
+                                  hints1: 'Normal',
+                                ),
+                                InputTaker(
+                                  title: 'Urine Acetone',
+                                  hints: '9',
+                                  title1: 'DC',
+                                  hints1: '',
                                 ),
                                 InputTaker(
                                   title: 'USG',
-                                  hints: '',
-                                  title1: 'ECG',
-                                  hints1: '',
+                                  hints: 'Abnormal',
+                                  title1: 'N-5%',
+                                  hints1: 'Z-2%',
+                                ),
+                                InputTaker(
+                                  title: 'Hb',
+                                  hints: '8%',
+                                  title1: 'M-5%',
+                                  hints1: 'E-2%',
                                 ),
                                 Container(
                                   child: Row(
@@ -488,7 +492,7 @@ class _ReportState extends State<Report> {
                                                   left: 8,
                                                 ),
                                                 child: Text(
-                                                  'CBC',
+                                                  'TC',
                                                 ),
                                               ),
                                             ],
@@ -507,7 +511,7 @@ class _ReportState extends State<Report> {
                                               contentPadding:
                                                   EdgeInsets.symmetric(
                                                       vertical: 5),
-                                              hintText: '',
+                                              hintText: '9',
                                               border: OutlineInputBorder(),
                                               enabledBorder: OutlineInputBorder(
                                                 borderSide: BorderSide(

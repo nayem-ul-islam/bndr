@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "931211182668",
+    "project_id": "my-project-1566990683387",
+    "storage_bucket": "my-project-1566990683387.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:931211182668:android:2ded156369b95d6ec42ae9",
+        "android_client_info": {
+          "package_name": "com.example.bndr"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "931211182668-g8p1jcalkp699cmfmqgocjhklpjf9hah.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBHCp4891hJi4rcmgueM65Qbr5RsISUBis"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "931211182668-g8p1jcalkp699cmfmqgocjhklpjf9hah.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,4 +1,3 @@
-import 'package:bndr/LoginScreen.dart';
 import 'package:flutter/material.dart';
 import 'LoginScreen.dart';
 
@@ -10,6 +9,7 @@ class Language extends StatefulWidget {
 }
 
 class _LanguageState extends State<Language> {
+  TextEditingController userId = TextEditingController();
   @override
   void initState() {
     super.initState();
@@ -40,6 +40,7 @@ class _LanguageState extends State<Language> {
             Container(
               child: Center(
                 child: TextField(
+                  controller: userId,
                   style: TextStyle(
                     fontSize: 18.39,
                   ),
@@ -67,7 +68,10 @@ class _LanguageState extends State<Language> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => LoginScreen(),
+                      builder: (context) => LoginScreen(
+                        type: '_guide_book_no',
+                        userId: userId.text,
+                      ),
                     ),
                   );
                 },
