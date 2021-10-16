@@ -1,5 +1,7 @@
-//import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'HomePage.dart';
 import 'ActualLogin.dart';
 import 'LoginScreen.dart';
@@ -9,11 +11,12 @@ import 'package:otp_text_field/style.dart';
 
 //import 'dart:async';
 
-//import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:sms_autofill/sms_autofill.dart';
 
 class OTP extends StatefulWidget {
-  final String password;
-  OTP(this.password);
+  final String phn;
+  OTP(this.phn);
 
   @override
   _OTPState createState() => _OTPState();
@@ -25,9 +28,48 @@ class _OTPState extends State<OTP> {
   // final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   // final TextEditingController _phoneNumberController = TextEditingController();
+  // final TextEditingController _smsController = TextEditingController();
+  // String _verificationId = '';
+  // final SmsAutoFill _autoFill = SmsAutoFill();
+  @override
+  void initState() {
+    phoneNumberVerification();
+    super.initState();
+  }
 
-  // late String _verificationId;
+  late String strVerificationId;
+  FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+  Future<void> phoneNumberVerification() async {
+    PhoneVerificationCompleted phoneVerificationCompleted =
+        (PhoneAuthCredential phoneAuthCredential) async {
+      await firebaseAuth.signInWithCredential(phoneAuthCredential);
+    };
 
+    PhoneVerificationFailed phoneVerificationFailed =
+        (FirebaseAuthException authException) {};
+
+    PhoneCodeSent phoneCodeSent =
+        (String verificationId, [int? forceResendingToken]) async {
+      strVerificationId = verificationId;
+    };
+
+    PhoneCodeAutoRetrievalTimeout phoneCodeAutoRetrievalTimeout =
+        (String verificationId) {
+      strVerificationId = verificationId;
+    };
+
+    try {
+      await firebaseAuth.verifyPhoneNumber(
+          phoneNumber: '+88${widget.phn}',
+          timeout: const Duration(seconds: 5),
+          verificationCompleted: phoneVerificationCompleted,
+          verificationFailed: phoneVerificationFailed,
+          codeSent: phoneCodeSent,
+          codeAutoRetrievalTimeout: phoneCodeAutoRetrievalTimeout);
+    } catch (e) {}
+  }
+
+  TextEditingController pincontroller = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -83,8 +125,8 @@ class _OTPState extends State<OTP> {
                             children: <Widget>[
                               Text(
                                 language
-                                    ? 'Enter the code send to ****03'
-                                    : 'কোডটি প্রেরণ করুন ****0৩ এ',
+                                    ? 'Enter the code send to ${widget.phn}'
+                                    : 'কোডটি প্রেরণ করুন ${widget.phn} এ',
                                 style: TextStyle(fontSize: 15.0),
                               ),
                             ],
@@ -105,8 +147,10 @@ class _OTPState extends State<OTP> {
                           style: TextStyle(fontSize: 17),
                           onChanged: (pin) {
                             print("Changed: " + pin);
+                            pincontroller.text = pin;
                           },
                           onCompleted: (pin) {
+                            pincontroller.text = pin;
                             print("Completed: " + pin);
                           },
                         ),
@@ -137,9 +181,13 @@ class _OTPState extends State<OTP> {
                       ),
                       Column(
                         children: <Widget>[
-                          Text(
-                            language ? 'Resend OTP' : 'ওটিপি পুনরায় পাঠান',
-                            style: TextStyle(fontSize: 15.0, color: Colors.red),
+                          GestureDetector(
+                            onTap: phoneNumberVerification,
+                            child: Text(
+                              language ? 'Resend OTP' : 'ওটিপি পুনরায় পাঠান',
+                              style:
+                                  TextStyle(fontSize: 15.0, color: Colors.red),
+                            ),
                           ),
                         ],
                       ),
@@ -147,38 +195,38 @@ class _OTPState extends State<OTP> {
                   ),
                 ),
               ),
-              Container(
-                padding: EdgeInsets.only(left: 15, right: 15, bottom: 10),
-                width: MediaQuery.of(context).size.width,
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: <Widget>[
-                      GestureDetector(
-                        child: Text(
-                          language
-                              ? 'Change Phone number'
-                              : 'ফোন নম্বর পরিবর্তন',
-                          style: TextStyle(
-                            fontSize: 15.0,
-                            color: Colors.blue[600],
-                          ),
-                        ),
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => LoginScreen(
-                                type: '',
-                                userId: '',
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+              // Container(
+              //   padding: EdgeInsets.only(left: 15, right: 15, bottom: 10),
+              //   width: MediaQuery.of(context).size.width,
+              //   child: SingleChildScrollView(
+              //     child: Column(
+              //       children: <Widget>[
+              //         GestureDetector(
+              //           child: Text(
+              //             language
+              //                 ? 'Change Phone number'
+              //                 : 'ফোন নম্বর পরিবর্তন',
+              //             style: TextStyle(
+              //               fontSize: 15.0,
+              //               color: Colors.blue[600],
+              //             ),
+              //           ),
+              //           onTap: () {
+              //             Navigator.push(
+              //               context,
+              //               MaterialPageRoute(
+              //                 builder: (context) => LoginScreen(
+              //                   type: '',
+              //                   userId: '',
+              //                 ),
+              //               ),
+              //             );
+              //           },
+              //         ),
+              //       ],
+              //     ),
+              //   ),
+              // ),
               SizedBox(
                 height: 25.0,
               ),
@@ -186,13 +234,29 @@ class _OTPState extends State<OTP> {
                 width: 330.0,
                 height: 75.0,
                 child: OutlinedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => ActualLogin(),
-                      ),
-                    );
+                  onPressed: () async {
+                    try {
+                      final AuthCredential credential =
+                          PhoneAuthProvider.credential(
+                        verificationId: strVerificationId,
+                        smsCode: pincontroller.text,
+                      );
+
+                      final User? user =
+                          (await firebaseAuth.signInWithCredential(credential))
+                              .user;
+                      SharedPreferences prefs =
+                          await SharedPreferences.getInstance();
+                      prefs.setBool('authenticate', true);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ActualLogin(),
+                        ),
+                      );
+                    } catch (e) {
+                      Get.snackbar('Failed ', e.toString());
+                    }
                   },
                   child: Padding(
                     child: Text(

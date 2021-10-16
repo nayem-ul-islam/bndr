@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'Language.dart';
 
 late bool language;
@@ -50,8 +51,11 @@ class _HomePageState extends State<HomePage> {
                 width: 137.0,
                 height: 62.6,
                 child: ElevatedButton(
-                  onPressed: () {
+                  onPressed: () async {
                     language = true;
+                    SharedPreferences prefs =
+                        await SharedPreferences.getInstance();
+                    prefs.setBool('language', true);
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -89,8 +93,11 @@ class _HomePageState extends State<HomePage> {
                 width: 137.0,
                 height: 62.6,
                 child: ElevatedButton(
-                  onPressed: () {
+                  onPressed: () async {
                     language = false;
+                    SharedPreferences prefs =
+                        await SharedPreferences.getInstance();
+                    prefs.setBool('language', true);
                     Navigator.push(
                       context,
                       MaterialPageRoute(

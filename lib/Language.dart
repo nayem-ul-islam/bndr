@@ -52,12 +52,14 @@ class _LanguageState extends State<Language> {
                       borderSide: BorderSide(color: Colors.black38),
                     ),
                     hintText: widget.language
-                        ? "Enter your Patient's Id/BNDR Id/Patient's Center Id/Mobile Number"
-                        : "আপনার রোগীর আইডি লিখুন/বিএনডিআর আইডি/রোগীর কেন্দ্রের আইডি/মোবাইল নম্বর",
+                        ? 'Enter your Guide Book Number'
+                        //"Enter your Patient's Id/BNDR Id/Patient's Center Id/Mobile Number"
+                        : 'আপনার গাইড বই নম্বর লিখুন',
+                    //"আপনার রোগীর আইডি লিখুন/বিএনডিআর আইডি/রোগীর কেন্দ্রের আইডি/মোবাইল নম্বর",
                   ),
                 ),
               ),
-              margin: EdgeInsets.fromLTRB(42.0, 10.1428, 42.0, 10.1428),
+              margin: EdgeInsets.fromLTRB(42.0, 10.1428, 42.0, 5.1428),
             ),
             SizedBox(height: 26),
             Container(
@@ -69,7 +71,7 @@ class _LanguageState extends State<Language> {
                     context,
                     MaterialPageRoute(
                       builder: (context) => LoginScreen(
-                        type: '_guide_book_no',
+                        type: 'patient_guide_book_no',
                         userId: userId.text,
                       ),
                     ),

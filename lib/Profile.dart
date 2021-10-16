@@ -1,24 +1,70 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'HomePage.dart';
 import 'LoginScreen.dart';
 import 'ActualLogin.dart';
 import 'Report.dart';
+import 'under.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Profile extends StatefulWidget {
-  const Profile({Key? key}) : super(key: key);
-
   @override
   _ProfileState createState() => _ProfileState();
 }
 
 class _ProfileState extends State<Profile> {
+  bool language = true;
+  getLanguage() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    language = prefs.getBool('language')!;
+    setState(() {});
+  }
+
   ScrollController _controller = ScrollController(initialScrollOffset: 300.0);
   var _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
+    getLanguage();
+    getUser();
     _controller = ScrollController();
     super.initState();
+  }
+
+  TextEditingController birth = TextEditingController();
+  TextEditingController married = TextEditingController();
+  TextEditingController age = TextEditingController();
+  TextEditingController nid = TextEditingController();
+  TextEditingController gen = TextEditingController();
+  TextEditingController div = TextEditingController();
+  TextEditingController dis = TextEditingController();
+  TextEditingController up = TextEditingController();
+  TextEditingController add = TextEditingController();
+  TextEditingController pos = TextEditingController();
+  TextEditingController ex = TextEditingController();
+  TextEditingController prof = TextEditingController();
+  TextEditingController edu = TextEditingController();
+
+  var basicInfo, mainInfo;
+  var resX, i, name = '';
+
+  void getUser() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    var y = preferences.getString('patientid_firebase');
+    //print(y);
+    var p = await FirebaseFirestore.instance
+        .collection('s nagar 2')
+        .doc(y)
+        .collection('visits')
+        .doc('basicinfo')
+        .get();
+    var z =
+        await FirebaseFirestore.instance.collection('s nagar 2').doc(y).get();
+    setState(() {
+      basicInfo = p;
+      mainInfo = z;
+    });
   }
 
   @override
@@ -101,7 +147,14 @@ class _ProfileState extends State<Profile> {
                       color: Colors.white,
                     ),
                   ),
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => Under(),
+                      ),
+                    );
+                  },
                 ),
                 ListTile(
                   leading: Icon(
@@ -117,7 +170,14 @@ class _ProfileState extends State<Profile> {
                       color: Colors.white,
                     ),
                   ),
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => Under(),
+                      ),
+                    );
+                  },
                 ),
                 ListTile(
                   leading: Icon(
@@ -133,7 +193,14 @@ class _ProfileState extends State<Profile> {
                       color: Colors.white,
                     ),
                   ),
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => Under(),
+                      ),
+                    );
+                  },
                 ),
                 ListTile(
                   leading: Icon(
@@ -149,7 +216,14 @@ class _ProfileState extends State<Profile> {
                       color: Colors.white,
                     ),
                   ),
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => Under(),
+                      ),
+                    );
+                  },
                 ),
                 ListTile(
                   leading: Icon(
@@ -157,7 +231,7 @@ class _ProfileState extends State<Profile> {
                     color: Colors.white,
                   ),
                   title: Text(
-                    language ? 'BADAS Center' : 'বাডাস কেন্দ্র',
+                    language ? 'BADAS Center' : 'বাডাস সেন্টার',
                     style: TextStyle(
                       fontFamily: 'Avenir',
                       fontSize: 20,
@@ -165,7 +239,14 @@ class _ProfileState extends State<Profile> {
                       color: Colors.white,
                     ),
                   ),
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => Under(),
+                      ),
+                    );
+                  },
                 ),
                 ListTile(
                   leading: Icon(
@@ -173,7 +254,7 @@ class _ProfileState extends State<Profile> {
                     color: Colors.white,
                   ),
                   title: Text(
-                    language ? 'Logout' : 'প্রস্থান',
+                    language ? 'Logout' : 'লগআউট',
                     style: TextStyle(
                       fontFamily: 'Avenir',
                       fontSize: 20,
@@ -198,389 +279,403 @@ class _ProfileState extends State<Profile> {
       resizeToAvoidBottomInset: false,
       backgroundColor: Color(0xffF5F5F9),
       body: SafeArea(
-        child: Scrollbar(
-          isAlwaysShown: true,
-          controller: _controller,
-          child: ListView.builder(
-            itemCount: 1,
-            itemBuilder: (context, i) {
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                    padding: EdgeInsets.only(left: 4.5, right: 0, bottom: 10),
-                    width: MediaQuery.of(context).size.width,
-                    child: SingleChildScrollView(
-                      child: Column(
-                        children: [
-                          Row(
+          child: mainInfo == null
+              ? Center(
+                  child: CircularProgressIndicator(),
+                )
+              : SingleChildScrollView(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Container(
+                        padding:
+                            EdgeInsets.only(left: 4.5, right: 0, bottom: 10),
+                        width: MediaQuery.of(context).size.width,
+                        child: SingleChildScrollView(
+                          child: Column(
                             children: [
-                              Container(
-                                width: 119.0,
-                                height: 53.6,
-                                child: ElevatedButton(
-                                  onPressed: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => LoginScreen(
-                                          type: '',
-                                          userId: '',
+                              Row(
+                                children: [
+                                  Container(
+                                    width: 119.0,
+                                    height: 53.6,
+                                    child: ElevatedButton(
+                                      onPressed: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => Report(),
+                                            // LoginScreen(
+                                            //   type: '',
+                                            //   userId: '',
+                                            // ),
+                                          ),
+                                        );
+                                      },
+                                      child: Padding(
+                                        child: Text(
+                                          language ? 'Cancel' : 'বাতিল',
+                                          //'Update Password'
+                                          //: 'পাসওয়ার্ড আপডেট'
                                         ),
+                                        padding: EdgeInsets.all(10),
                                       ),
-                                    );
-                                  },
-                                  child: Padding(
-                                    child: Text(language
-                                        ? 'Update Password'
-                                        : 'পাসওয়ার্ড আপডেট'),
-                                    padding: EdgeInsets.all(10),
-                                  ),
-                                  style: ElevatedButton.styleFrom(
-                                    textStyle: TextStyle(
-                                      fontSize: 15,
+                                      style: ElevatedButton.styleFrom(
+                                        textStyle: TextStyle(
+                                          fontSize: 15,
+                                        ),
+                                        primary: Colors.blue[900],
+                                        onPrimary: Colors.white,
+                                        shape: StadiumBorder(),
+                                        side: BorderSide(color: Colors.black38),
+                                      ),
                                     ),
-                                    primary: Colors.blue[900],
-                                    onPrimary: Colors.white,
-                                    shape: StadiumBorder(),
-                                    side: BorderSide(color: Colors.black38),
+                                    margin: EdgeInsets.all(12.0),
                                   ),
+                                  SizedBox(
+                                    width: 2,
+                                  ),
+                                  SizedBox(
+                                    width: 15,
+                                  ),
+                                  Container(
+                                    width: 113.0,
+                                    height: 57.6,
+                                    child: ElevatedButton(
+                                      onPressed: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => ActualLogin(),
+                                          ),
+                                        );
+                                      },
+                                      child: Padding(
+                                        child:
+                                            Text(language ? 'Logout' : 'লগআউট'),
+                                        padding: EdgeInsets.only(right: 0),
+                                      ),
+                                      style: ElevatedButton.styleFrom(
+                                        textStyle: TextStyle(
+                                          fontSize: 15,
+                                        ),
+                                        primary: Colors.blue[900],
+                                        onPrimary: Colors.white,
+                                        shape: StadiumBorder(),
+                                        side: BorderSide(
+                                            color: Colors.blue.shade900),
+                                      ),
+                                    ),
+                                    margin: EdgeInsets.only(
+                                        // right: 2,
+                                        left: 80),
+                                  ),
+                                ],
+                              ),
+                              Text(
+                                language
+                                    ? 'BASIC INFORMATION'
+                                    : 'ব্যক্তিগত তথ্য',
+                                style: TextStyle(
+                                  fontSize: 18,
                                 ),
-                                margin: EdgeInsets.all(12.0),
                               ),
                               SizedBox(
-                                width: 2,
+                                height: 5,
                               ),
-                              Padding(
-                                padding: EdgeInsets.zero,
-                                child: CircleAvatar(
-                                  radius: 30.0,
-                                  backgroundImage: NetworkImage(
-                                    'https://googleflutter.com/sample_image.jpg',
-                                  ),
-                                  backgroundColor: Colors.transparent,
-                                ),
+                              InputTaker(
+                                editable: false,
+                                takeIcon: false,
+                                title: language ? 'Full Name' : 'নাম',
+                                hints: basicInfo.data()['patient_name'],
                               ),
                               SizedBox(
-                                width: 15,
+                                height: 5,
+                              ),
+                              InputTaker(
+                                title: language ? 'Phone Number' : 'ফোন নম্বর',
+                                hints: mainInfo.data()['patient_phone'],
+                                editable: false,
+                                takeIcon: false,
+                              ),
+                              SizedBox(
+                                height: 5,
+                              ),
+                              InputTaker(
+                                editable: false,
+                                takeIcon: false,
+                                title: language ? 'Email' : 'ইমেইল',
+                                hints: mainInfo.data()['patient_email'] ?? '',
+                              ),
+                              SizedBox(
+                                height: 5,
+                              ),
+                              InputTaker(
+                                editable: false,
+                                takeIcon: false,
+                                title: language ? 'Center ID' : 'সেন্টার আইডি',
+                                hints: basicInfo.data()['patient_idby_center'],
+                              ),
+                              SizedBox(
+                                height: 5,
+                              ),
+                              InputTakerXc(
+                                phnx: married,
+                                title: language
+                                    ? 'Marital Status'
+                                    : 'বৈবাহিক অবস্থা',
+                                hints:
+                                    basicInfo.data()['patient_marital_status'],
+                                ft: 'patient_marital_status',
+                              ),
+                              SizedBox(
+                                height: 5,
+                              ),
+                              InputTaker(
+                                editable: false,
+                                takeIcon: false,
+                                title:
+                                    language ? 'Organization' : 'অরগানাইজেশন',
+                                hints: basicInfo.data()['org_name'],
+                              ),
+                              SizedBox(
+                                height: 5,
+                              ),
+                              InputTaker(
+                                editable: false,
+                                takeIcon: false,
+                                title: language ? 'Center' : 'সেন্টার',
+                                hints: basicInfo.data()['center_name'],
+                              ),
+                              SizedBox(
+                                height: 5,
+                              ),
+                              InputTaker(
+                                editable: false,
+                                takeIcon: false,
+                                title: language
+                                    ? 'Registration Date'
+                                    : 'নিবন্ধনের তারিখ',
+                                hints: basicInfo.data()['patient_create_date'],
+                              ),
+                              SizedBox(
+                                height: 5,
+                              ),
+                              InputTakerXc(
+                                phnx: birth,
+                                title:
+                                    language ? 'Date Of Birth' : 'জন্ম তারিখ',
+                                hints: basicInfo.data()['patient_dateof_birth'],
+                                ft: 'patient_dateof_birth',
+                              ),
+                              SizedBox(
+                                height: 5,
+                              ),
+                              InputTakerXc(
+                                phnx: age,
+                                title: language ? 'Age' : 'বয়স',
+                                hints: basicInfo.data()['patient_age'],
+                                ft: 'patient_age',
+                              ),
+                              SizedBox(
+                                height: 5,
+                              ),
+                              InputTakerXc(
+                                phnx: nid,
+                                title: language
+                                    ? 'National ID'
+                                    : 'জাতীয় পরিচয়পত্র',
+                                hints: basicInfo.data()['patient_nid'],
+                                ft: 'patient_nid',
+                              ),
+                              SizedBox(
+                                height: 5,
+                              ),
+                              InputTakerXc(
+                                phnx: gen,
+                                title: language ? 'Gender' : 'লিঙ্গ',
+                                hints: basicInfo.data()['patient_gender'],
+                                ft: 'patient_gender',
+                              ),
+                              SizedBox(
+                                height: 5,
+                              ),
+                              InputTaker(
+                                editable: false,
+                                takeIcon: false,
+                                title: language
+                                    ? 'Patient Guide Book No.'
+                                    : 'গাইড বই নং',
+                                hints:
+                                    mainInfo.data()['patient_guide_book_no'] ??
+                                        '',
+                              ),
+                              SizedBox(
+                                height: 20,
                               ),
                               Container(
-                                width: 113.0,
-                                height: 57.6,
-                                child: ElevatedButton(
-                                  onPressed: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => ActualLogin(),
-                                      ),
-                                    );
-                                  },
-                                  child: Padding(
-                                    child:
-                                        Text(language ? 'Logout' : 'প্রস্থান'),
-                                    padding: EdgeInsets.only(right: 0),
-                                  ),
-                                  style: ElevatedButton.styleFrom(
-                                    textStyle: TextStyle(
-                                      fontSize: 15,
-                                    ),
-                                    primary: Colors.blue[900],
-                                    onPrimary: Colors.white,
-                                    shape: StadiumBorder(),
-                                    side:
-                                        BorderSide(color: Colors.blue.shade900),
+                                child: Text(
+                                  language ? 'ADDRESS' : 'ঠিকানা',
+                                  style: TextStyle(
+                                    fontSize: 18,
                                   ),
                                 ),
-                                margin: EdgeInsets.only(right: 2),
+                              ),
+                              SizedBox(
+                                height: 5,
+                              ),
+                              InputTakerXc(
+                                phnx: div,
+                                title: language ? 'Division' : 'বিভাগ',
+                                hints: basicInfo.data()['division_name'],
+                                ft: 'division_name',
+                              ),
+                              SizedBox(
+                                height: 5,
+                              ),
+                              InputTakerXc(
+                                phnx: dis,
+                                title: language ? 'District' : 'জেলা',
+                                hints: basicInfo.data()['district_name'],
+                                ft: 'district_name',
+                              ),
+                              SizedBox(
+                                height: 5,
+                              ),
+                              InputTakerXc(
+                                phnx: up,
+                                title: language ? 'Upazila' : 'উপজেলা',
+                                hints: basicInfo.data()['upazila_name'],
+                                ft: 'upazila_name',
+                              ),
+                              SizedBox(
+                                height: 5,
+                              ),
+                              InputTakerXc(
+                                phnx: add,
+                                title: language ? 'Address' : 'ঠিকানা',
+                                hints: basicInfo.data()['patient_address'],
+                                ft: 'patient_address',
+                              ),
+                              SizedBox(
+                                height: 15,
+                              ),
+                              InputTakerXc(
+                                phnx: pos,
+                                title: language ? 'Postal Code' : 'পোস্ট কোড',
+                                hints: basicInfo.data()['patient_postal_code'],
+                                ft: 'patient_postal_code',
+                              ),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              Container(
+                                child: Text(
+                                  language
+                                      ? 'PROFESSIONAL INFORMATION'
+                                      : 'পেশাগত তথ্য',
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                height: 5,
+                              ),
+                              InputTakerXc(
+                                phnx: ex,
+                                title: language
+                                    ? 'Monthly Expenditure'
+                                    : 'মাসিক ব্যয়',
+                                hints: basicInfo.data()['monthly_expenditure'],
+                                ft: 'monthly_expenditure',
+                              ),
+                              SizedBox(
+                                height: 5,
+                              ),
+                              InputTakerXc(
+                                phnx: prof,
+                                title: language ? 'Profession' : 'পেশা',
+                                hints: basicInfo.data()['profession'],
+                                ft: 'profession',
+                              ),
+                              SizedBox(
+                                height: 5,
+                              ),
+                              InputTakerXc(
+                                phnx: edu,
+                                title:
+                                    language ? 'Education' : 'শিক্ষাগত যোগ্যতা',
+                                hints: basicInfo.data()['education'],
+                                ft: 'education',
+                              ),
+                              Row(
+                                children: [
+                                  // Container(
+                                  //   width: 119.0,
+                                  //   height: 53.6,
+                                  //   child: ElevatedButton(
+                                  //     onPressed: () {
+                                  //       Navigator.push(
+                                  //         context,
+                                  //         MaterialPageRoute(
+                                  //           builder: (context) => Report(),
+                                  //         ),
+                                  //       );
+                                  //     },
+                                  //     child: Padding(
+                                  //       child:
+                                  //           Text(language ? 'Cancel' : 'বাতিল'),
+                                  //       padding: EdgeInsets.all(10),
+                                  //     ),
+                                  //     style: ElevatedButton.styleFrom(
+                                  //       textStyle: TextStyle(
+                                  //         fontSize: 15,
+                                  //       ),
+                                  //       primary: Colors.white,
+                                  //       onPrimary: Colors.black,
+                                  //       shape: StadiumBorder(),
+                                  //       side: BorderSide(color: Colors.black38),
+                                  //     ),
+                                  //   ),
+                                  //   margin: EdgeInsets.all(12.0),
+                                  // ),
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                                  // Container(
+                                  //   width: 122.0,
+                                  //   height: 57.6,
+                                  //   child: ElevatedButton(
+                                  //     onPressed: () {},
+                                  //     child: Padding(
+                                  //       child:
+                                  //           Text(language ? 'Save' : 'সংরক্ষণ'),
+                                  //       padding: EdgeInsets.all(20),
+                                  //     ),
+                                  //     style: ElevatedButton.styleFrom(
+                                  //       textStyle: TextStyle(
+                                  //         fontSize: 15,
+                                  //       ),
+                                  //       primary: Colors.blue[900],
+                                  //       onPrimary: Colors.white,
+                                  //       shape: StadiumBorder(),
+                                  //       side: BorderSide(
+                                  //           color: Colors.blue.shade900),
+                                  //     ),
+                                  //   ),
+                                  //   margin: EdgeInsets.all(30.0),
+                                  // ),
+                                ],
                               ),
                             ],
                           ),
-                          Container(
-                            child: Text(
-                              language ? 'BASIC INFORMATION' : 'মৌলিক তথ্য',
-                              style: TextStyle(
-                                fontSize: 18,
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          InputTaker(
-                            takeIcon: false,
-                            title: language ? 'Full Name' : 'পুরো নাম',
-                            hints:
-                                language ? 'Farook Azam Khan' : 'ফারুক আজম খান',
-                          ),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          InputTaker(
-                            takeIcon: true,
-                            title: language ? 'Phone Number' : 'ফোন নম্বর',
-                            hints: '01916851203',
-                          ),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          InputTaker(
-                            takeIcon: true,
-                            title: language ? 'Email' : 'ইমেইল',
-                            hints: 'farookazam@gmail.com',
-                          ),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          InputTaker(
-                            takeIcon: false,
-                            title: language
-                                ? 'Previous Center ID'
-                                : 'পূর্ববর্তী সেন্টার আইডি',
-                            hints: 'MP00001/17',
-                          ),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          InputTaker(
-                            takeIcon: true,
-                            title:
-                                language ? 'Marital Status' : 'বৈবাহিক অবস্থা',
-                            hints: language ? 'Married' : 'বিবাহিত',
-                          ),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          InputTaker(
-                            takeIcon: false,
-                            title: language ? 'Organization' : 'সংগঠন',
-                            hints: language ? 'BIRDEM' : 'বারডেম',
-                          ),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          InputTaker(
-                            takeIcon: false,
-                            title: language ? 'Center' : 'কেন্দ্র',
-                            hints: language ? 'BIRDEM-1' : 'বারডেম -1',
-                          ),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          InputTaker(
-                            takeIcon: false,
-                            title: language
-                                ? 'Registration Date'
-                                : 'নিবন্ধনের তারিখ',
-                            hints: language ? '23-06-2021' : '০৮-০৮-২০২১',
-                          ),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          InputTaker(
-                            takeIcon: true,
-                            title: 'Date Of Birth',
-                            hints: language ? '17-05-1981' : '১৭-০৫-১৯৮১',
-                          ),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          InputTaker(
-                            takeIcon: true,
-                            title: language ? 'Age' : 'বয়স',
-                            hints: language ? '40' : '৪০',
-                          ),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          InputTaker(
-                            takeIcon: true,
-                            title:
-                                language ? 'National ID' : 'জাতীয় পরিচয়পত্র',
-                            hints: '1122334455667',
-                          ),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          InputTaker(
-                            takeIcon: true,
-                            title: language ? 'Gender' : 'লিঙ্গ',
-                            hints: language ? 'Male' : 'পুরুষ',
-                          ),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          InputTaker(
-                            takeIcon: false,
-                            title: language
-                                ? 'Patient Guide Book No.'
-                                : 'রোগী গাইড বই নং',
-                            hints: '717',
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          Container(
-                            child: Text(
-                              language ? 'ADDRESS' : 'ঠিকানা',
-                              style: TextStyle(
-                                fontSize: 18,
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          InputTaker(
-                            takeIcon: true,
-                            title: language ? 'Division' : 'বিভাগ',
-                            hints: language ? 'Dhaka' : 'ঢাকা',
-                          ),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          InputTaker(
-                            takeIcon: true,
-                            title: language ? 'District' : 'জেলা',
-                            hints: language ? 'Dhaka' : 'ঢাকা',
-                          ),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          InputTaker(
-                            takeIcon: true,
-                            title: language ? 'Upazila' : 'উপজেলা',
-                            hints: language
-                                ? 'Select Upazila'
-                                : 'উপজেলা নির্বাচন করুন',
-                          ),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          InputTaker(
-                            takeIcon: true,
-                            title: language ? 'Address' : 'ঠিকানা',
-                            hints: language
-                                ? '125,1 Darus Salam Road, Mirpur'
-                                : '১২৫,১ দারুসসালাম রোড, মিরপুর',
-                          ),
-                          SizedBox(
-                            height: 15,
-                          ),
-                          InputTaker(
-                            takeIcon: true,
-                            title: language
-                                ? 'Postal Code'
-                                : 'পোস্ট অফিসের নাম্বার',
-                            hints: language ? '1216' : '১২১৬',
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          Container(
-                            child: Text(
-                              language
-                                  ? 'PROFESSIONAL INFORMATION'
-                                  : 'পেশাগত তথ্য',
-                              style: TextStyle(
-                                fontSize: 18,
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          InputTaker(
-                            takeIcon: true,
-                            title: language
-                                ? 'Monthly Expenditure'
-                                : 'মাসিক ব্যয়',
-                            hints: language ? '20000-<30000' : '২০০০০-<৩০০০০',
-                          ),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          InputTaker(
-                            takeIcon: true,
-                            title: language ? 'Profession' : 'পেশা',
-                            hints: language ? 'Employed' : 'চাকুরিজীবী',
-                          ),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          InputTaker(
-                            takeIcon: true,
-                            title: language ? 'Education' : 'শিক্ষা',
-                            hints: language ? '>16 years' : '>১৬ বছর',
-                          ),
-                          Row(
-                            children: [
-                              Container(
-                                width: 119.0,
-                                height: 53.6,
-                                child: ElevatedButton(
-                                  onPressed: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => Report(),
-                                      ),
-                                    );
-                                  },
-                                  child: Padding(
-                                    child: Text(language ? 'Cancel' : 'বাতিল'),
-                                    padding: EdgeInsets.all(10),
-                                  ),
-                                  style: ElevatedButton.styleFrom(
-                                    textStyle: TextStyle(
-                                      fontSize: 15,
-                                    ),
-                                    primary: Colors.white,
-                                    onPrimary: Colors.black,
-                                    shape: StadiumBorder(),
-                                    side: BorderSide(color: Colors.black38),
-                                  ),
-                                ),
-                                margin: EdgeInsets.all(12.0),
-                              ),
-                              SizedBox(
-                                width: 5,
-                              ),
-                              Container(
-                                width: 122.0,
-                                height: 57.6,
-                                child: ElevatedButton(
-                                  onPressed: () {},
-                                  child: Padding(
-                                    child: Text(language ? 'Save' : 'সংরক্ষণ'),
-                                    padding: EdgeInsets.all(20),
-                                  ),
-                                  style: ElevatedButton.styleFrom(
-                                    textStyle: TextStyle(
-                                      fontSize: 15,
-                                    ),
-                                    primary: Colors.blue[900],
-                                    onPrimary: Colors.white,
-                                    shape: StadiumBorder(),
-                                    side:
-                                        BorderSide(color: Colors.blue.shade900),
-                                  ),
-                                ),
-                                margin: EdgeInsets.all(30.0),
-                              ),
-                            ],
-                          ),
-                        ],
+                        ),
                       ),
-                    ),
+                    ],
                   ),
-                ],
-              );
-            },
-          ),
-        ),
-      ),
+                )),
     );
   }
 }
@@ -589,51 +684,167 @@ class InputTaker extends StatelessWidget {
   final String title;
   final bool takeIcon;
   final String hints;
-  InputTaker(
-      {required this.title, required this.takeIcon, required this.hints});
+  final bool editable;
+  // TextEditingController phnx;
+  InputTaker({
+    required this.title,
+    required this.takeIcon,
+    required this.hints,
+    required this.editable,
+    // this.phnx
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-          flex: 5,
-          child: Container(
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Row(
+        children: [
+          Expanded(
+            flex: 1,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
                   title,
-                  textAlign: TextAlign.center,
+                  //  textAlign: TextAlign.center,
                 ),
                 takeIcon
                     ? Padding(
-                        padding: const EdgeInsets.only(left: 5),
+                        padding: const EdgeInsets.only(
+                            //left: 5,
+                            // bottom: 20,
+                            // right: 10,
+                            // top: 5
+                            ),
                         child: Icon(Icons.mode),
                       )
                     : SizedBox(),
               ],
             ),
           ),
-        ),
-        Expanded(
-          flex: 6,
-          child: Container(
-            height: 40,
-            child: TextField(
-              obscureText: false,
-              decoration: InputDecoration(
-                hintText: hints,
-                border: OutlineInputBorder(),
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.white70, width: 2.0),
-                ),
-                labelStyle: TextStyle(color: Colors.black),
-              ),
+          Expanded(
+            flex: 1,
+            child: !editable
+                ? Wrap(
+                    children: [
+                      Text(
+                        hints,
+                        style: TextStyle(
+                          color: Colors.black,
+                        ),
+                      ),
+                    ],
+                  )
+                : TextField(
+                    //  controller: phnx,
+                    obscureText: false,
+                    decoration: InputDecoration(
+                      hintText: hints,
+                      alignLabelWithHint: true,
+                      border: OutlineInputBorder(),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: Colors.white70, width: 2.0),
+                      ),
+                      labelStyle: TextStyle(color: Colors.black),
+                    ),
+                  ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class InputTakerXc extends StatefulWidget {
+  final String title;
+  final String ft;
+  final String hints;
+
+  TextEditingController phnx;
+  InputTakerXc(
+      {required this.title,
+      required this.ft,
+      required this.hints,
+      required this.phnx});
+
+  @override
+  _InputTakerXcState createState() => _InputTakerXcState();
+}
+
+class _InputTakerXcState extends State<InputTakerXc> {
+  bool isEditig = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Row(
+        children: [
+          Expanded(
+            flex: 1,
+            child: Text(
+              widget.title,
+              //  textAlign: TextAlign.center,
             ),
           ),
-        ),
-      ],
+          Expanded(
+            flex: 1,
+            child: TextFormField(
+              controller: widget.phnx,
+              obscureText: false,
+              onChanged: (v) {
+                setState(() {
+                  isEditig = true;
+                });
+              },
+              decoration: InputDecoration(
+                  hintText: widget.hints,
+                  alignLabelWithHint: true,
+                  border: OutlineInputBorder(),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.white70, width: 2.0),
+                  ),
+                  labelStyle: TextStyle(color: Colors.black),
+                  suffixIcon: GestureDetector(
+                    onTap: () async {
+                      final firestoreInstance = FirebaseFirestore.instance;
+                      print(widget.phnx.text);
+                      SharedPreferences preferences =
+                          await SharedPreferences.getInstance();
+                      var y = preferences.getString('patientid_firebase');
+                      try {
+                        firestoreInstance
+                            .collection('s nagar 2')
+                            .doc(y)
+                            .collection('visits')
+                            .doc('basicinfo')
+                            .set({widget.ft: widget.phnx.text},
+                                SetOptions(merge: true)).then((_) {
+                          print("success!");
+                          Get.off(Profile());
+                          Get.snackbar(
+                              '',
+                              language
+                                  ? 'Successfully saved'
+                                  : 'সফলভাবে সংরক্ষিত');
+                        });
+                      } catch (e) {
+                        Get.off(Profile());
+                        Get.snackbar(
+                            language ? '' : '',
+                            language
+                                ? 'Something went wrong'
+                                : 'কিছু ভুল হয়েছে');
+                      }
+                    },
+                    child: Icon(isEditig == false ? Icons.edit : Icons.save),
+                  )),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
