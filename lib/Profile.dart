@@ -445,7 +445,9 @@ class _ProfileState extends State<Profile> {
                               InputTaker(
                                 editable: false,
                                 takeIcon: false,
-                                title: language ? 'Center' : 'সেন্টার',
+                                title: language
+                                    ? 'Registration Center'
+                                    : 'নিবন্ধন সেন্টার',
                                 hints: basicInfo.data()['center_name'],
                               ),
                               SizedBox(

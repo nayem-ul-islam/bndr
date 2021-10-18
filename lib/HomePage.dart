@@ -97,7 +97,7 @@ class _HomePageState extends State<HomePage> {
                     language = false;
                     SharedPreferences prefs =
                         await SharedPreferences.getInstance();
-                    prefs.setBool('language', true);
+                    prefs.setBool('language', false);
                     Navigator.push(
                       context,
                       MaterialPageRoute(

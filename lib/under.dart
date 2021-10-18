@@ -17,6 +17,13 @@ class _UnderState extends State<Under> {
   }
 
   @override
+  void initState() {
+    getLanguage();
+
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(

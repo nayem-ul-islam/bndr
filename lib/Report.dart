@@ -86,6 +86,7 @@ class _ReportState extends State<Report> {
       if (X.exists) {
         String datex = X.data()!['v${j}_visit_date'] ?? '';
         // String weightX = X.data()!['v${j}_weight'] ?? '';
+        visitCenter = X.data()!['v${j}_visit_center'] ?? '';
 
         if (datex.contains('-')) {
           // print(j);
@@ -563,7 +564,7 @@ class _ReportState extends State<Report> {
                           alignment: Alignment.centerLeft,
                           padding: EdgeInsets.only(left: 6),
                           child: Text(
-                            visitCenter,
+                            language ? visitCenter : visitCenter,
                           ),
                         ),
                         SizedBox(
@@ -713,7 +714,7 @@ class InputTaker extends StatelessWidget {
         Expanded(
           flex: 7,
           child: Container(
-            height: 24,
+            height: 34,
             child: Text(
               hints,
             ),
