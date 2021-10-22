@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'HomePage.dart';
 import 'ActualLogin.dart';
-import 'LoginScreen.dart';
+//import 'LoginScreen.dart';
 
 import 'package:otp_text_field/otp_field.dart';
 import 'package:otp_text_field/style.dart';

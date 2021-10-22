@@ -586,13 +586,11 @@ class _ReportState extends State<Report> {
                                     ),
                                     InputTaker(
                                       title: language
-                                          ? 'Sitting SBP'
-                                          : 'সিটিং এস.বি.পি',
-                                      hints: sittingSbp,
-                                      title1: language
-                                          ? 'Sitting DBP'
-                                          : 'সিটিং ডি.বি.পি',
-                                      hints1: sittingDbp,
+                                          ? 'Blood Pressure'
+                                          : 'ব্লাড প্রেশার',
+                                      hints: sittingSbp + '/' + sittingDbp,
+                                      title1: language ? '' : '',
+                                      hints1: '',
                                     ),
                                     InputTaker(
                                       title: language ? 'FBG' : 'এফ.বি.জি',
@@ -603,7 +601,9 @@ class _ReportState extends State<Report> {
                                       hints1: sCreatinine,
                                     ),
                                     InputTaker(
-                                      title: language ? '2hAG' : '২এইচ.এ.জি',
+                                      title: language
+                                          ? '2hAG/ABF'
+                                          : '২এইচ.এ.জি/এ.বি.এফ',
                                       hints: hag,
                                       title1: language
                                           ? 'Urine Albumin'
@@ -714,7 +714,8 @@ class InputTaker extends StatelessWidget {
         Expanded(
           flex: 7,
           child: Container(
-            height: 34,
+            padding: EdgeInsets.only(top: 12),
+            height: 42,
             child: Text(
               hints,
             ),
