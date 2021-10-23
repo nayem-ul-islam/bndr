@@ -32,7 +32,9 @@ class _UnderState extends State<Under> {
           language
               ? 'This page is under construction!'
               : 'পেজের গঠনমূলক কাজ চলছে',
-          style: TextStyle(fontSize: 20),
+          style: TextStyle(
+            fontSize: 20,
+          ),
         ),
       )),
     );
