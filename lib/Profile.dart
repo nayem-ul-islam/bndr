@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'HomePage.dart';
-//import 'LoginScreen.dart';
 import 'ActualLogin.dart';
 import 'Report.dart';
 import 'under.dart';
@@ -18,7 +17,9 @@ class _ProfileState extends State<Profile> {
   getLanguage() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     language = prefs.getBool('language')!;
-    setState(() {});
+    setState(
+      () {},
+    );
   }
 
   ScrollController _controller = ScrollController(initialScrollOffset: 300.0);
@@ -52,7 +53,6 @@ class _ProfileState extends State<Profile> {
   void getUser() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     var y = preferences.getString('patientid_firebase');
-    //print(y);
     var p = await FirebaseFirestore.instance
         .collection('s nagar 2')
         .doc(y)
@@ -61,10 +61,12 @@ class _ProfileState extends State<Profile> {
         .get();
     var z =
         await FirebaseFirestore.instance.collection('s nagar 2').doc(y).get();
-    setState(() {
-      basicInfo = p;
-      mainInfo = z;
-    });
+    setState(
+      () {
+        basicInfo = p;
+        mainInfo = z;
+      },
+    );
   }
 
   @override
@@ -306,18 +308,12 @@ class _ProfileState extends State<Profile> {
                                           context,
                                           MaterialPageRoute(
                                             builder: (context) => Report(),
-                                            // LoginScreen(
-                                            //   type: '',
-                                            //   userId: '',
-                                            // ),
                                           ),
                                         );
                                       },
                                       child: Padding(
                                         child: Text(
                                           language ? 'Cancel' : 'বাতিল',
-                                          //'Update Password'
-                                          //: 'পাসওয়ার্ড আপডেট'
                                         ),
                                         padding: EdgeInsets.all(10),
                                       ),
@@ -367,9 +363,7 @@ class _ProfileState extends State<Profile> {
                                             color: Colors.blue.shade900),
                                       ),
                                     ),
-                                    margin: EdgeInsets.only(
-                                        // right: 2,
-                                        left: 80),
+                                    margin: EdgeInsets.only(left: 80),
                                   ),
                                 ],
                               ),
@@ -614,61 +608,9 @@ class _ProfileState extends State<Profile> {
                               ),
                               Row(
                                 children: [
-                                  // Container(
-                                  //   width: 119.0,
-                                  //   height: 53.6,
-                                  //   child: ElevatedButton(
-                                  //     onPressed: () {
-                                  //       Navigator.push(
-                                  //         context,
-                                  //         MaterialPageRoute(
-                                  //           builder: (context) => Report(),
-                                  //         ),
-                                  //       );
-                                  //     },
-                                  //     child: Padding(
-                                  //       child:
-                                  //           Text(language ? 'Cancel' : 'বাতিল'),
-                                  //       padding: EdgeInsets.all(10),
-                                  //     ),
-                                  //     style: ElevatedButton.styleFrom(
-                                  //       textStyle: TextStyle(
-                                  //         fontSize: 15,
-                                  //       ),
-                                  //       primary: Colors.white,
-                                  //       onPrimary: Colors.black,
-                                  //       shape: StadiumBorder(),
-                                  //       side: BorderSide(color: Colors.black38),
-                                  //     ),
-                                  //   ),
-                                  //   margin: EdgeInsets.all(12.0),
-                                  // ),
                                   SizedBox(
                                     width: 5,
                                   ),
-                                  // Container(
-                                  //   width: 122.0,
-                                  //   height: 57.6,
-                                  //   child: ElevatedButton(
-                                  //     onPressed: () {},
-                                  //     child: Padding(
-                                  //       child:
-                                  //           Text(language ? 'Save' : 'সংরক্ষণ'),
-                                  //       padding: EdgeInsets.all(20),
-                                  //     ),
-                                  //     style: ElevatedButton.styleFrom(
-                                  //       textStyle: TextStyle(
-                                  //         fontSize: 15,
-                                  //       ),
-                                  //       primary: Colors.blue[900],
-                                  //       onPrimary: Colors.white,
-                                  //       shape: StadiumBorder(),
-                                  //       side: BorderSide(
-                                  //           color: Colors.blue.shade900),
-                                  //     ),
-                                  //   ),
-                                  //   margin: EdgeInsets.all(30.0),
-                                  // ),
                                 ],
                               ),
                             ],
@@ -687,13 +629,12 @@ class InputTaker extends StatelessWidget {
   final bool takeIcon;
   final String hints;
   final bool editable;
-  // TextEditingController phnx;
+
   InputTaker({
     required this.title,
     required this.takeIcon,
     required this.hints,
     required this.editable,
-    // this.phnx
   });
 
   @override
@@ -709,16 +650,10 @@ class InputTaker extends StatelessWidget {
               children: [
                 Text(
                   title,
-                  //  textAlign: TextAlign.center,
                 ),
                 takeIcon
                     ? Padding(
-                        padding: const EdgeInsets.only(
-                            //left: 5,
-                            // bottom: 20,
-                            // right: 10,
-                            // top: 5
-                            ),
+                        padding: const EdgeInsets.only(),
                         child: Icon(Icons.mode),
                       )
                     : SizedBox(),
@@ -739,7 +674,6 @@ class InputTaker extends StatelessWidget {
                     ],
                   )
                 : TextField(
-                    //  controller: phnx,
                     obscureText: false,
                     decoration: InputDecoration(
                       hintText: hints,
@@ -788,7 +722,6 @@ class _InputTakerXcState extends State<InputTakerXc> {
             flex: 1,
             child: Text(
               widget.title,
-              //  textAlign: TextAlign.center,
             ),
           ),
           Expanded(

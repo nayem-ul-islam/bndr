@@ -4,15 +4,8 @@ import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'HomePage.dart';
 import 'ActualLogin.dart';
-//import 'LoginScreen.dart';
-
 import 'package:otp_text_field/otp_field.dart';
 import 'package:otp_text_field/style.dart';
-
-//import 'dart:async';
-
-// import 'package:firebase_auth/firebase_auth.dart';
-// import 'package:sms_autofill/sms_autofill.dart';
 
 class OTP extends StatefulWidget {
   final String phn;
@@ -23,14 +16,6 @@ class OTP extends StatefulWidget {
 }
 
 class _OTPState extends State<OTP> {
-  // final FirebaseAuth _auth = FirebaseAuth.instance;
-
-  // final _scaffoldKey = GlobalKey<ScaffoldState>();
-
-  // final TextEditingController _phoneNumberController = TextEditingController();
-  // final TextEditingController _smsController = TextEditingController();
-  // String _verificationId = '';
-  // final SmsAutoFill _autoFill = SmsAutoFill();
   @override
   void initState() {
     phoneNumberVerification();
@@ -73,8 +58,6 @@ class _OTPState extends State<OTP> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // key: _scaffoldKey,
-      // resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
       body: SafeArea(
         child: SingleChildScrollView(
@@ -195,38 +178,6 @@ class _OTPState extends State<OTP> {
                   ),
                 ),
               ),
-              // Container(
-              //   padding: EdgeInsets.only(left: 15, right: 15, bottom: 10),
-              //   width: MediaQuery.of(context).size.width,
-              //   child: SingleChildScrollView(
-              //     child: Column(
-              //       children: <Widget>[
-              //         GestureDetector(
-              //           child: Text(
-              //             language
-              //                 ? 'Change Phone number'
-              //                 : 'ফোন নম্বর পরিবর্তন',
-              //             style: TextStyle(
-              //               fontSize: 15.0,
-              //               color: Colors.blue[600],
-              //             ),
-              //           ),
-              //           onTap: () {
-              //             Navigator.push(
-              //               context,
-              //               MaterialPageRoute(
-              //                 builder: (context) => LoginScreen(
-              //                   type: '',
-              //                   userId: '',
-              //                 ),
-              //               ),
-              //             );
-              //           },
-              //         ),
-              //       ],
-              //     ),
-              //   ),
-              // ),
               SizedBox(
                 height: 25.0,
               ),

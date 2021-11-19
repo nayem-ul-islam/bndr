@@ -4,7 +4,6 @@ import 'package:bndr/under.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-//import 'HomePage.dart';
 import 'ActualLogin.dart';
 import 'Profile.dart';
 import 'under.dart';
@@ -67,14 +66,14 @@ class _ReportState extends State<Report> {
   void getUser() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     var y = preferences.getString('patientid_firebase');
-    //print(y);
+
     basicInfo = await FirebaseFirestore.instance
         .collection('s nagar 2')
         .doc(y)
         .collection('visits')
         .doc('basicinfo')
         .get();
-    //im using a raw value right over here .we should change it overtime
+
     for (var j = 0; j < 12; j++) {
       var X = await FirebaseFirestore.instance
           .collection('s nagar 2')
@@ -82,15 +81,13 @@ class _ReportState extends State<Report> {
           .collection('visits')
           .doc('visit$j')
           .get();
-      // print(X.data().toString());
+
       if (X.exists) {
         String datex = X.data()!['v${j}_visit_date'] ?? '';
-        // String weightX = X.data()!['v${j}_weight'] ?? '';
+
         visitCenter = X.data()!['v${j}_visit_center'] ?? '';
 
         if (datex.contains('-')) {
-          // print(j);
-
           setState(() {
             resX = X;
             i = j;
@@ -136,7 +133,6 @@ class _ReportState extends State<Report> {
 
   @override
   Widget build(BuildContext context) {
-    // print(resX.data()!['v${i}_weight']);
     return resX == null
         ? Center(
             child: Scaffold(
@@ -145,9 +141,7 @@ class _ReportState extends State<Report> {
                   child: Text(
                     language
                         ? 'Fetching Data from the server'
-                        //'There are no medical reports to show'
                         : 'সার্ভার থেকে ডেটা আনা হচ্ছে',
-                    //'আপনার মেডিকেল রিপোর্ট ইনপুট দেওয়া হচ্ছে',
                     style: TextStyle(fontSize: 17),
                   ),
                 ),
@@ -428,16 +422,6 @@ class _ReportState extends State<Report> {
                                 ),
                               ],
                             ),
-                            //Padding(
-                            //   padding: const EdgeInsets.only(right: 20),
-                            //   child: CircleAvatar(
-                            //     radius: 30.0,
-                            //     backgroundImage: NetworkImage(
-                            //       'https://googleflutter.com/sample_image.jpg',
-                            //     ),
-                            //     backgroundColor: Colors.transparent,
-                            //   ),
-                            // ),
                           ],
                         ),
                         SizedBox(

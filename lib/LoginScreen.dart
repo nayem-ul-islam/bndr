@@ -2,13 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import 'HomePage.dart';
-
 import 'OTP.dart';
-//import 'dart:async';
-
-//import 'package:firebase_auth/firebase_auth.dart';
 
 class LoginScreen extends StatefulWidget {
   final String type;
@@ -52,19 +47,22 @@ class _LoginScreenState extends State<LoginScreen> {
             color: Colors.black,
           ));
     } else {
-      res.docs.forEach((res) async {
-        setState(() {
-          id = res.id;
-          getUser(id);
-          // name = res.data()['patient_name'];
-          phoneNumber = res.data()['patient_phone'];
-          bndrId = res.data()['bndr_id'];
-          guideBookNo = res.data()['patient_guide_book_no'];
-          //  centerId = res.data()['patient_idby_center'];
-          //  registrationCenter = res.data()['center_name'];
-          password = res.data()['password'];
-        });
-      });
+      res.docs.forEach(
+        (res) async {
+          setState(
+            () {
+              id = res.id;
+              getUser(id);
+
+              phoneNumber = res.data()['patient_phone'];
+              bndrId = res.data()['bndr_id'];
+              guideBookNo = res.data()['patient_guide_book_no'];
+
+              password = res.data()['password'];
+            },
+          );
+        },
+      );
     }
   }
 
@@ -77,33 +75,37 @@ class _LoginScreenState extends State<LoginScreen> {
         .collection('visits')
         .doc('basicinfo')
         .get();
-    setState(() {
-      resX = X;
-    });
+    setState(
+      () {
+        resX = X;
+      },
+    );
   }
 
   void _update() async {
     firestoreInstance.collection('s nagar 2').doc(id).set(
         {'patient_phone': c1.text, 'password': ps1.text},
-        SetOptions(merge: true)).then((_) {
-      print("success!");
-    });
+        SetOptions(merge: true)).then(
+      (_) {
+        print("success!");
+      },
+    );
   }
 
   void _remainSameNumber() async {
     firestoreInstance
         .collection('s nagar 2')
         .doc(id)
-        .set({'password': ps1.text}, SetOptions(merge: true)).then((_) {
-      print("success!");
-    });
+        .set({'password': ps1.text}, SetOptions(merge: true)).then(
+      (_) {
+        print("success!");
+      },
+    );
   }
 
   @override
   void initState() {
     _onPressed();
-    //_update();
-
     super.initState();
   }
 

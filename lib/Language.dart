@@ -53,9 +53,7 @@ class _LanguageState extends State<Language> {
                     ),
                     hintText: widget.language
                         ? 'Enter your Guide Book Number'
-                        //"Enter your Patient's Id/BNDR Id/Patient's Center Id/Mobile Number"
                         : 'আপনার গাইড বই নম্বর লিখুন',
-                    //"আপনার রোগীর আইডি লিখুন/বিএনডিআর আইডি/রোগীর কেন্দ্রের আইডি/মোবাইল নম্বর",
                   ),
                 ),
               ),

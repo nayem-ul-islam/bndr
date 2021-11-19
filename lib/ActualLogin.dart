@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'Report.dart';
-//import 'LoginScreen.dart';
 
 class ActualLogin extends StatefulWidget {
   const ActualLogin({Key? key}) : super(key: key);
@@ -17,7 +16,9 @@ class _ActualLoginState extends State<ActualLogin> {
   getLanguage() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     language = prefs.getBool('language')!;
-    setState(() {});
+    setState(
+      () {},
+    );
   }
 
   @override
@@ -43,20 +44,25 @@ class _ActualLoginState extends State<ActualLogin> {
             color: Colors.black,
           ));
     } else {
-      res.docs.forEach((res) async {
-        SharedPreferences preferences = await SharedPreferences.getInstance();
+      res.docs.forEach(
+        (res) async {
+          SharedPreferences preferences = await SharedPreferences.getInstance();
 
-        setState(() {
-          var c = res.id;
-          preferences.setString('patientid_firebase', c);
-          var password = res.data()['password'];
-          if (password == passC.text) {
-            Get.offAll(Report());
-          } else {
-            Get.snackbar('', language ? 'Wrong Password' : 'ভুল পাসওয়ার্ড');
-          }
-        });
-      });
+          setState(
+            () {
+              var c = res.id;
+              preferences.setString('patientid_firebase', c);
+              var password = res.data()['password'];
+              if (password == passC.text) {
+                Get.offAll(Report());
+              } else {
+                Get.snackbar(
+                    '', language ? 'Wrong Password' : 'ভুল পাসওয়ার্ড');
+              }
+            },
+          );
+        },
+      );
     }
   }
 
@@ -105,9 +111,7 @@ class _ActualLoginState extends State<ActualLogin> {
                       ),
                       hintText: language
                           ? 'Enter your Guide Book Number'
-                          //"Enter your Patient's Id/BNDR Id/Patient's Center Id/Mobile Number"
                           : 'আপনার গাইড বই নম্বর লিখুন',
-                      //"আপনার রোগীর আইডি লিখুন/বিএনডিআর আইডি/রোগীর কেন্দ্রের আইডি/মোবাইল নম্বর",
                     ),
                   ),
                 ),
@@ -171,87 +175,6 @@ class _ActualLoginState extends State<ActualLogin> {
               SizedBox(
                 height: 35.0,
               ),
-              // Container(
-              //   padding: EdgeInsets.only(left: 15, right: 15, bottom: 10),
-              //   width: MediaQuery.of(context).size.width,
-              //   child: SingleChildScrollView(
-              //     child: Column(
-              //       children: <Widget>[
-              //         GestureDetector(
-              //           child: Text(
-              //             language
-              //                 ? 'Forget password?'
-              //                 : 'পাসওয়ার্ড ভুলে গেছেন?',
-              //             style: TextStyle(
-              //               fontSize: 15.0,
-              //               color: Colors.blue[900],
-              //             ),
-              //           ),
-              //           onTap: () {
-              //             Navigator.push(
-              //               context,
-              //               MaterialPageRoute(
-              //                 builder: (context) => LoginScreen(
-              //                   type: '',
-              //                   userId: '',
-              //                 ),
-              //               ),
-              //             );
-              //           },
-              //         ),
-              //       ],
-              //     ),
-              //   ),
-              // ),
-              // Container(
-              //   padding: EdgeInsets.only(left: 110, right: 15, bottom: 10),
-              //   width: MediaQuery.of(context).size.width,
-              //   child: SingleChildScrollView(
-              //     child: Row(
-              //       children: [
-              //         Column(
-              //           children: <Widget>[
-              //             Text(
-              //               language ? 'Language' : 'ভাষা',
-              //               style: TextStyle(
-              //                 fontSize: 15.0,
-              //                 color: Colors.blue[900],
-              //               ),
-              //             ),
-              //           ],
-              //         ),
-              //         SizedBox(
-              //           width: 10.0,
-              //         ),
-              //         Column(
-              //           children: <Widget>[
-              //             Text(
-              //               'বাংলা',
-              //               style: TextStyle(
-              //                 fontSize: 15.0,
-              //                 color: Colors.blue[900],
-              //               ),
-              //             ),
-              //           ],
-              //         ),
-              //         SizedBox(
-              //           width: 10.0,
-              //         ),
-              //         Column(
-              //           children: <Widget>[
-              //             Text(
-              //               'English',
-              //               style: TextStyle(
-              //                 fontSize: 15.0,
-              //                 color: Colors.blue[900],
-              //               ),
-              //             ),
-              //           ],
-              //         ),
-              //       ],
-              //     ),
-              //   ),
-              // ),
               Padding(padding: EdgeInsets.all(2.0)),
             ],
           ),
