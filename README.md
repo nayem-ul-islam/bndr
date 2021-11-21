@@ -1,6 +1,6 @@
 # bndr
 
-A new Flutter project.
+A new Flutter project which is based on health digitalization.
 
 ## Getting Started
 
